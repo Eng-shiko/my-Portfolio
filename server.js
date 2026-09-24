@@ -15,7 +15,6 @@ const experienceRoutes = require('./server/routes/experienceRoutes');
 const bioRoutes = require('./server/routes/bioRoutes');
 const messageRoutes = require('./server/routes/messageRoutes');
 
-
 const app = express();
 
 app.use(helmet()); 
@@ -24,9 +23,7 @@ app.use(cors({
     credentials: true
 }));
 
-
 app.use(express.json({ limit: '10kb' }));
-
 
 app.use((req, res, next) => {
     if (req.body) {
@@ -43,6 +40,7 @@ app.use((req, res, next) => {
     }
     next();
 });
+
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
     max: 100,
@@ -68,13 +66,13 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI)
-    .then(() => {
-        console.log('Database Connected Successfully ');
-        app.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT} `);
-        });
-    })
-    .catch((err) => {
-        console.error('Database connection failed:', err.message);
-        process.exit(1);
+    .then(() => console.log('Database Connected Successfully'))
+    .catch((err) => console.error('Database connection failed:', err.message));
+
+if (process.env.NODE_ENV !== 'production') {
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
     });
+}
+
+module.exports = app;
