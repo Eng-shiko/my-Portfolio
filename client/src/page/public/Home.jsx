@@ -231,6 +231,41 @@ const Home = () => {
                 </section>
             </AnimatedSection>
 
+            {/* Experience Section */}
+            {experiences && experiences.length > 0 && (
+                <AnimatedSection>
+                    <section id="experience" className="py-20 px-6 sm:px-12 lg:px-24 max-w-4xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-3">Work Experience</h2>
+                            <p className="text-slate-400 text-sm sm:text-base">My professional career journey</p>
+                        </div>
+                        <div className="space-y-6">
+                            {experiences.map((exp, index) => (
+                                <div 
+                                    key={exp._id || exp.id || index} 
+                                    className="bg-slate-900/60 backdrop-blur-xl border border-slate-800/80 p-8 rounded-[2rem] shadow-2xl transition-all duration-500 hover:border-orange-500/50 hover:-translate-y-1"
+                                >
+                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+                                        <div>
+                                            <h3 className="text-xl font-bold text-white">{exp.title || exp.role || exp.position}</h3>
+                                            <p className="text-orange-400 font-semibold text-sm mt-1">{exp.company || exp.companyName}</p>
+                                        </div>
+                                        {(exp.startDate || exp.period) && (
+                                            <span className="px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-medium w-fit">
+                                                {exp.startDate ? `${exp.startDate} - ${exp.endDate || 'Present'}` : exp.period}
+                                            </span>
+                                        )}
+                                    </div>
+                                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">
+                                        {exp.description}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                </AnimatedSection>
+            )}
+
             {/* Projects Section */}
             {projects && projects.length > 0 && (
                 <AnimatedSection>
